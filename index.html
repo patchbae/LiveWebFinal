@@ -1,0 +1,88 @@
+<html>
+
+<head>
+	<!-- <script src="libraries/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script> -->
+	<meta name="viewport" content="width=device-width, initial-scale=0.5">
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="libraries/p5.js"></script>
+	<script src="libraries/p5.dom.js"></script>
+	<!-- <script src="libraries/p5.sound.min.js"></script> -->
+	<script src="libraries/NoSleep.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="libraries/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:800" rel="stylesheet">
+	<script src="sketch.js"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+		var socket = io.connect();
+
+		socket.on('connect', function() {
+			console.log("Connected");
+		});
+
+		// socket.on('allColors', function(){
+		// 	allColors();
+		// });
+
+		socket.on('wait', function() {
+			smoothText.style.opacity = 0;
+			setTimeout(function() {
+				document.getElementById("prompt").innerHTML = "Please stop what you are doing and wait for the next prompt.";
+			}, 2000);
+			setTimeout(opacityBack, 4000);
+		});
+
+		socket.on('end', function() {
+			smoothText.style.opacity = 0;
+			setTimeout(function() {
+				document.getElementById("prompt").innerHTML = "End";
+			}, 2000);
+			setTimeout(opacityBack, 4000);
+		});
+
+		var smoothText;
+
+		function opacityBack() {
+			smoothText.style.opacity = 1;
+		}
+
+
+		socket.on('scene1', function(data) {
+			console.log(data);
+			var scene1_question = scene1[data];
+			smoothText = document.querySelector('#prompt');
+			smoothText.style.opacity = 0;
+			setTimeout(function() {
+				document.getElementById("prompt").innerHTML = scene1_question;
+			}, 2000);
+			setTimeout(opacityBack, 4000);
+		});
+
+		socket.on('scene2', function(data) {
+			console.log(data);
+			var scene2_question = scene2[data];
+			smoothText.style.opacity = 0;
+			setTimeout(function() {
+				document.getElementById("prompt").innerHTML = scene2_question;
+			}, 2000);
+			setTimeout(opacityBack, 4000);
+		});
+
+		socket.on('scene3', function(data) {
+			console.log(data);
+			var scene3_question = scene3[data];
+			smoothText.style.opacity = 0;
+			setTimeout(function() {
+				document.getElementById("prompt").innerHTML = scene3_question;
+			}, 2000);
+			setTimeout(opacityBack, 4000);
+		});
+	</script>
+
+</head>
+
+<body>
+
+	<h1 id="prompt"> Please wait for your prompt.</h1>
+
+</body>

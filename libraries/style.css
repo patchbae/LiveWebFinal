@@ -1,0 +1,248 @@
+html, body, head {
+  margin: 0 !important;
+  padding: 0!important;
+  background-color: #ddd;
+  transition: 2s;
+}
+
+@media only screen and (min-width: 600px) {
+  h1 {
+    white-space: normal ;
+}
+
+/*
+body:hover {
+  background-color: #101010;
+  -webkit-transition: background-color 1000ms linear;
+  -ms-transition: background-color 1000ms linear;
+  transition: background-color 1000ms linear;
+} */
+
+
+#question1,
+#question2,
+#question3,
+#question4,
+#question5,
+#question6,
+#question7,
+#question8 {
+  background-image: linear-gradient(rgba(255,255,255,5), rgba(255,255,255,0));
+  /* padding: 10px; */
+}
+
+#questions {
+  font-size: 22px;
+  font-kerning: 3px;
+  /* font-style: ; */
+  /* text-shadow: #b8b8b8 0px 1px; */
+  text-shadow: 0px 0px 15px #fff;
+  color: #888;
+  font-family: 'Raleway', sans-serif;
+  text-align: center;
+}
+
+#questions text{
+  width:50vw;
+}
+
+#prompt {
+  -webkit-transition: opacity 1.5s linear;
+  -moz-transition: opacity 1.5s linear;
+  -ms-transition: opacity 1.5s linear;
+  -o-transition: opacity 1.5s linear;
+  transition: opacity 1.5s linear;
+}
+
+p {
+  font-size: 22px;
+  font-kerning: 3px;
+  /* font-style: ; */
+  /* text-shadow: #b8b8b8 0px 1px; */
+  text-shadow: 0px 0px 15px #fff;
+  color: #888;
+  font-family: 'Raleway', sans-serif;
+  text-align: center;
+}
+
+
+h1 {
+  font-size: 38px;
+  font-kerning: 3px;
+  /* font-style: ; */
+  /* text-shadow: #b8b8b8 0px 1px; */
+  text-shadow: 0px 0px 15px #fff;
+  color: #888;
+  font-family: 'Raleway', sans-serif;
+  position: absolute;
+  white-space: nowrap ;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+label {
+  font-size: 16px;
+  color: #aaa;
+  margin: 20px 0px;
+}
+
+canvas {
+  display: block;
+}
+
+div {
+margin: 10px;
+}
+
+button {
+    position: relative
+    border: none;
+	    border-radius: 10px;
+    background: rgb(83,237,159);
+    color: #333;
+    text-shadow: #f8f8f8 0px 1px;
+    padding: 18px 25px ;
+	    opacity: 0.8;
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+}
+
+button:hover {
+    opacity:0.6;
+    cursor: pointer;
+}
+
+button:active {
+	    opacity: 1.0;
+      cursor: pointer;
+}
+
+button:focus{
+ border-color:transparent!important;
+ outline:none;
+}
+
+.opClass {
+    opacity:0.5;
+    /* filter:alpha(opacity=40); /* For IE8 and earlier */ */
+}
+
+/*  ***************** copied from w3 school ********************** */
+
+.slidecontainer {
+    width: 100%; /* Width of the outside container */
+    background: #000;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    z-index: 1;
+}
+
+.buttoncontrols {
+  position:relative;
+  left: 40vw;
+  top: 5px;
+}
+
+
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles
+    /* appearance: none; */
+    width: 95%; /* Full-width */
+    height: 15px; /* Specified height */
+    position: relative;
+    border-radius: 5px;
+    left: 3px;
+    top: 10px;
+    /* margin: 10px; */
+    z-index: 1;
+    background: #f8f8f8; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.8; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width*/
+    height: 25px; /* Slider handle height */
+    border-radius: 50%;
+    background: #aaaaaa;
+    cursor: pointer; /* Cursor on hover */
+    color: white;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    border-radius: 50%;
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+/*
+#questions input[type=radio] {
+  margin: 0px 10px ;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  opacity: 1;
+}
+
+#questions input[type=radio]:hover {
+  visibility:none;
+  background: #ddd;
+}
+
+
+#questions input[type=radio]:active {
+  appearance:none;
+  background: #aaa;
+  opacity: 1;
+
+}
+
+#questions input[type=radio]:checked {
+  appearance:none;
+  background: #aaa;
+  opacity: 1;
+}
+
+#questions input[type=radio]:focus {
+  appearance:none;
+  border-color:transparent!important;
+  outline:none;
+}
+ */
+
+
+.radiowrapper input[type=radio] {
+  visibility: hidden;
+  width: 0;
+}
+
+.radiowrapper label:hover {
+  color: #ccc;
+  cursor: pointer; /* Cursor on hover */
+}
+
+.radiowrapper input[type=radio]:checked + label {
+  color: #fff
+}

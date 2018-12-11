@@ -1,0 +1,210 @@
+<html>
+
+<head>
+	<!-- <script src="libraries/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script> -->
+
+	<script
+	  src="https://code.jquery.com/jquery-3.3.1.min.js"
+	  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	  crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<link rel="stylesheet" type="text/css" href="libraries/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:800" rel="stylesheet">
+	<script src="libraries/NoSleep.min.js"></script>
+	<script src="sketch.js"></script>
+	<script type="text/javascript">
+		var socket = io.connect();
+		var question_text;
+		var scene_number;
+		var smoothText;
+
+		function opacityBack() {
+			smoothText.style.opacity = 1;
+		}
+
+		socket.on('connect', function() {
+			console.log("Connected");
+			socket.emit('micCheck', null);
+			smoothText = document.querySelector('#prompt');
+
+			// $('#whichQuestion').css("display", "none");
+			// Once we are connected, request the history
+			// socket.emit('history', null);
+		});
+
+		socket.on('scene1', function(data) {
+			console.log(data);
+			var scene1_question = scene1[data];
+			smoothText = document.querySelector('#prompt');
+			smoothText.style.opacity = 0;
+			setTimeout(function () {
+				document.getElementById("prompt").innerHTML = "Scene 1: " + scene1_question;
+			}, 2000);
+			setTimeout(opacityBack, 4000);
+		});
+
+		socket.on('scene2', function(data) {
+			console.log(data);
+			var scene2_question = scene2[data];
+			smoothText.style.opacity = 0;
+			setTimeout(function () {
+				document.getElementById("prompt").innerHTML = "Scene 2: " + scene2_question;
+			}, 2000);
+			setTimeout(opacityBack, 4000);
+		});
+
+
+		socket.on('scene3', function(data) {
+			console.log(data);
+			var scene3_question = scene3[data];
+			smoothText.style.opacity = 0;
+			setTimeout(function () {
+				document.getElementById("prompt").innerHTML = "Scene 3: " + scene3_question;
+			}, 2000);
+			setTimeout(opacityBack, 4000);
+		});
+
+
+		// Receive from any event
+		// 		socket.on('chatmessage', function (data) {
+		// 			document.getElementById('messages').innerHTML = "" + data + "\n<br />"
+		// + "" + document.getElementById('messages').innerHTML;
+		// 		});
+
+		// var sendmessage = function(message) {
+		// 	console.log("chatmessage: " + message);
+		// 	socket.emit('chatmessage', message);
+		// };
+
+
+		// var micCheck = function(data) {
+		// 	socket.emit('micCheck', data);
+		// 	console.log("Mic Check" + data);
+		// };
+
+
+		// var get_question = function() {
+		// 	current_question = document.getElementById("whichQuestion").value;
+		// 	console.log("Question: " + current_question);
+		// 	socket.emit('currentQuestion', current_question);
+		// 	updateQuestion();
+		// };
+
+
+		var waitForPrompt = function() {
+			console.log("Please wait for the next prompt.");
+			socket.emit('wait');
+			smoothText.style.opacity = 0;
+			setTimeout(function () {
+				document.getElementById("prompt").innerHTML = "Please stop what you are doing and wait for the next prompt.";
+			}, 2000);
+			setTimeout(opacityBack, 4000);
+			// updateQuestion();
+		};
+
+		var end = function() {
+			console.log("Please wait for the next prompt.");
+			socket.emit('end');
+			smoothText.style.opacity = 0;
+			setTimeout(function () {
+				document.getElementById("prompt").innerHTML = "End";
+			}, 2000);
+			setTimeout(opacityBack, 4000);
+			// updateQuestion();
+		};
+
+		var scene1_go = function() {
+			console.log("Scene: " + scene_number);
+			socket.emit('scene1');
+			// updateQuestion();
+		};
+
+		var scene2_go = function() {
+			console.log("Scene: " + scene_number);
+			socket.emit('scene2');
+			// updateQuestion();
+		};
+
+		var scene3_go = function() {
+			console.log("Scene: " + scene_number);
+			socket.emit('scene3');
+			// updateQuestion();
+		};
+
+		// var updateSelection = function(data) {
+		// 	document.getElementById("whichQuestion").selectedIndex = data;
+		// }
+
+
+
+		$(document).on('keypress', function(e) {
+			console.log(e.which);
+
+			if (e.which == 49) {
+				scene_number = 1;
+				scene1_go();
+				console.log("Scene 1");
+				setTimeout(waitForPrompt, 45000);
+			}
+
+			if (e.which == 50) {
+				scene_number = 2;
+				scene2_go();
+				console.log("Scene 2");
+				setTimeout(waitForPrompt, 45000);
+			}
+
+			if (e.which == 51) {
+				scene_number = 3;
+				scene3_go();
+				console.log("Scene 3");
+				setTimeout(end, 45000);
+			}
+
+			// if (e.which == 48) {
+			// 	key_number = 10;
+			// 	updateSelection(10);
+			// 	get_question(10);
+			// 	console.log("You pressed " + key_number +"!");
+			// }
+			//
+			if (e.which == 32) {
+				console.log("You pressed the spacebar!");
+				socket.emit('end');
+			}
+
+
+		});
+
+
+	</script>
+</head>
+
+<body>
+	<!-- <button type="button" onclick="micCheck(1)">micCheck</button> -->
+
+	<!-- <select id="whichQuestion" onchange = "get_question()">
+	<option value="Wait">Wait</option>
+  <option value="Do you like pineapple on your pizza?">2</option>
+  <option value="Do you like to be outside when it rains?">2</option>
+  <option value="Do you enjoy time with your family?">3</option>
+  <option value="Do you have children?">4</option>
+	<option value="Do you sometimes think you're still a child?">5</option>
+	<option value="Do you laugh at poop jokes?">6</option>
+	<option value="Do you like eating?">7</option>
+	<option value="Are you alive?">8</option>
+</select> -->
+
+
+	<h1 id="prompt">Please wait for the scene to begin.</h1>
+
+	<script>
+		var updateQuestion = function() {
+			document.getElementById("h1").innerHTML = question_text;
+		}
+	</script>
+
+</body>
+
+</html>
